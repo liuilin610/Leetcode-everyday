@@ -12,10 +12,11 @@ class Solution:
                     break
         return n -max(dp)
 
-        # run out of time with overlapping calculation
+        # run out of time with overlapping calculation 
         '''
         for i in range(n):
             for j in range(i):
                 if intervals[i][0] >= intervals[j][1]:
                     dp[i] = max(dp[i], dp[j]+1 )
         return n- max(dp)                
+        '''
