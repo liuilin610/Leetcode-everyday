@@ -45,3 +45,51 @@ class Solution:
 # C7 = A7
 # C8 = A1 + A2 + A3 + A4 + A5 + A6 + A7 + A8
 # lowbit(x) = x & -x ( or lowbit(x) = x & (~x + 1 )
+
+
+#Binay Indexed tree
+class BIT(object):
+    def __init__(self, n):
+        self.sums = [0] * (n + 1)
+
+    def update(self, i):
+        while ( i < len(self.sums) ):
+            self.sums[i] += 1
+            i += i & -i
+
+    def sum(self, i):
+        r = 0
+        while ( i > 0 ):
+            r += self.sums[i]
+            i -= i & -i
+        return r
+
+class Solution(object):
+    def coutSmaller(self, nums):
+        hashTable = {v: i for i, v in enumerate(sorted(nums))}
+        tree, res = BIT(len(hashTable)), []
+
+        for i in range(len(nums)-1, -1, -1):
+            res.append(tree.sum(hashTable[nums[i]]))
+            tree.update(hashTable[nums[i] + 1])
+        reurn res[::-1]
+
+# mergesort
+class Solution:
+    def countSmaller(self, nums: List[int]) -> List[int]:
+
+        def sort(enum):
+            half = len(enum) // 2
+            if half:
+                left, right = sort(enum[:half]), sort(enum[half:])
+                for i in range( len(enum))[::-1]:
+                    if (not left or right ) and ( left[-1][1] > right[-1][1] ):
+                        smaller[left[-1][0]] += len(right)
+                        enum[i] = left.pop()
+                    else:
+                        enum[i] = right.pop()
+            return enum
+
+        smaller = [0] * len(nums)
+        sort(list(enumerate(nums)))
+        return smaller
