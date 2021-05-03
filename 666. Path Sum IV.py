@@ -1,5 +1,6 @@
 class Solution:
     def pathSum(self, nums: List[int]) -> int:
+        # Time & Space: O(N)
         leaves = set( tuple( map(int, str(i)[:2] )) for i in nums )
         Sums = {}
 
