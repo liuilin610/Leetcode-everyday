@@ -1,0 +1,12 @@
+#Time : O(N); Spze: O(N)
+class Solution:
+    def scoreOfParenthese(self, s:str) -> int:
+        stack, score = [], 0
+
+        for i in s:
+            if ( i == '(' ):
+                stack.append(score)
+                score = 0
+            else:
+                score += stack.pop() + max(score, 1)
+        return score
