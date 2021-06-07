@@ -1,21 +1,22 @@
 class Solution:
-    def maximizeSweetness(self, sweetness: List[int], K: int) -> int:
-        n = len (sweetness)
-        L, R = min(sweetness), sum(sweetness)
-        def sweety(sweet, Length):
-            ct, res = 0, 0
-            for i in range(n):
-                if ( res + sweetness[i] >= sweet ):
+    def maximizeSweetness(self, A: List[int], K: int) -> int:
+        def cut(nums, sweet):
+            n = len(nums)
+            res = ct = 0
+            for a in nums:
+                res += a
+                if (res >= sweet ):
+                    ct += 1
                     res = 0
-                    ct = 0
-                else:
-                    res += sweetness[i]
-            return (ct + 1 if (res != 0) else ct )
-            
+            return ct
+
+        L, R = 1, sum(A)//(K+1)
+
         while ( L < R ):
-            mid = ( L + R ) // 2
-            if sweety(mid, n) > K:
-                L = mid + 1
+            mid = ( L + R + 1)// 2
+            if ( cut(A, mid) > K ):
+                L = mid -1
             else:
                 R = mid
-        return L
+        return R
+
